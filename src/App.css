@@ -39,34 +39,3 @@
 }
 
 
-
-
-.btn {
-  display: inline-block;
-  background: rgb(121, 148, 25);
-  color: rgb(216, 38, 38);
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 15px;
-  font-family: inherit;
-}
-
-
-.btn:focus {
-  outline: none;
- 
-}
-
-.btn:hover{
-  font-size: 17px;
-  color: #fff;
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-

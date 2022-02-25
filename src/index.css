@@ -1,14 +1,153 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+  background-color: gray;
+
  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+
+.btn {
+  display: inline-block;
+  background: rgb(81, 17, 165);
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: 'Comfortaa', cursive;
+}
+
+
+.btn:focus {
+  outline: none;
+ 
+}
+
+.btn:hover{
+  color: #fff;
+}
+
+
+
+.mainlayout{
+  margin-left: 35%;
+  /* margin-left : 35% */
+  width: 450px;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+
+  
+}
+
+#topbanner{
+  height: 9%;
+  width: 100%;
+  background-image: linear-gradient(rgb(9, 7, 39), rgb(49, 25, 56));
+  display: flex;
+}
+
+#signout{
+  margin-left: 70px;
+  margin-top: 20px;
+  background: rgb(204, 206, 207);
+  color: rgb(0, 67, 88);
+}
+
+#profilepic{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+}
+#profile{
+  display: flex;
+  margin: 10px;
+}
+#profile p{
+  margin-left: 5px;
+  font-weight: 800;
+  color: rgb(204, 206, 207);
+  font-family: 'Comfortaa', cursive;
+}
+#logo{
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  margin-left: 20px;
+}
+
+#bottomnav{
+  display: flex;
+  /* background-color: rgb(25, 35, 49); */
+  height: 16%;
+  border-radius: 7px;
+  background-image: linear-gradient(rgb(15, 14, 29), rgb(35, 34, 58));
+}
+
+.botimg{
+  width: 10%;
+  height: auto;
+  margin: 12%;
+}
+
+#signin{
+  margin-left: 20%;
+  border-radius: 30px;
+  height: 50px;
+  width: 60%;
+}
+
+#signup{
+  margin-left: 20%;
+  border-radius: 30px;
+  height: 50px;
+  width: 60%;
+  text-decoration: none;
+  background: none;
+  color:rgb(102, 45, 145) ;
+}
+
+#logot{
+  margin-left: 30%;
+  margin-top: 65%;
+  margin-bottom: 12%;
+  width: 200px;
+  height: 10%;
+}
+
+#signinpage{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#panel{
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  text-align: left;
+  /* margin-top: 500px; */
+  background: rgb(148, 30, 30);
+  width: 450px;
+  height: 50%;
+  /* background: #fff; */
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px 10px 0px 0px;
+  z-index: 1;
+
+}
+
+#clo{
+  background-color: red;
+  
 }

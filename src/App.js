@@ -24,7 +24,6 @@ import Activepaws from "../src/styles/svgs/ActivePaws.png";
 import topLogo from "../src/styles/svgs/SpotLogos.png";
 
 import mapStyles from "./styles/mapStyles.js";
-import Demo1 from "./GeoLocation.js";
 
 
 import {
@@ -141,7 +140,8 @@ export default function App() {
     return (
       <GoogleMap
         defaultZoom={13}
-        defaultCenter={{ lat: 42.0565, lng: -87.6753 }}         defaultOptions={{ styles: mapStyles }} 
+        defaultCenter={{ lat: 42.0565, lng: -87.6753 }}         
+        defaultOptions={{ styles: mapStyles }} 
       >
         {mdata.Locations.map(station => (
           <Marker

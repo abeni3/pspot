@@ -8,7 +8,7 @@ import {
   InfoWindow
 } from "react-google-maps";
 
-import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/firebase.js";
+import { useData, useUserState, signInWithG, signOutOfG, pushToFirebase } from "./utilities/firebase.js";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faUser, faQrcode, faQuestionCircle } from '@fortawesome/fontawesome-free-solid'
@@ -80,12 +80,28 @@ function amenityMapped(amenities){
   ))
 }
 
+function checkUser (mdata, user){
+    if(mdata[user.uid]){
+      // console.log("user exists in users");
+      // console.log("pet is " + mdata[user.uid].info.petname);
+      return mdata[user.uid].info;
+    }
+    var info = {"address": "", "email": user.email, "img": user.photoURL, "name": user.displayName, "payment": "", "petname": ""};
+    pushToFirebase("/", user.uid, info);
+    return info;
+  
+}
+
 export default function App() { 
 
+  
   const user = useUserState();
   const [mdata, loading, error] =  useData("/");
+
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;
+
+
 
   function  Map()  {
  
@@ -102,7 +118,6 @@ export default function App() {
     useEffect(() => {
       navigator.geolocation.getCurrentPosition(success);
     }, [user])
-
 
     return (
       <GoogleMap
@@ -189,7 +204,7 @@ export default function App() {
   }
 
   const MapWrapped = withScriptjs(withGoogleMap(Map));
-
+  const muid = user? user.uid: "";
   return (
 
     <div id="mainlayout">
@@ -212,15 +227,29 @@ export default function App() {
             />  
 
             <div id="ppage">
-              {ProfilePage({"username": user.displayName, "useremail": user.email, "userphoto": user.photoURL})}
+              
+              {ProfilePage({"username": user.displayName, "useremail": user.email, "userphoto": user.photoURL, "userid": user.uid, "userinfo": checkUser(mdata.users, user)})}
             </div>
-
+            {/* mdata.users[user.uid].info */}
             <div id="accinfo">
               <div id="accinfoC">
-                <p id="detailName">Name</p>
-                <input type="text" id="lname" name="lname" onClick={() => this.inputTitle = ""}value="Default"/>
-                <center>
-                <button id="savebtn" className="btn" onClick={() => document.getElementById("accinfo").style.display = "none"}>Save</button></center>
+                <p id="detailName"></p>
+                <input type="text" id="inputid" 
+                  onChange={(e) => document.getElementById("inputid").value = e.target.value}/>
+                
+                <center><button id="savebtn" className="btn"
+                  onClick={() => { 
+                    console.log("INPUT IS: " + document.getElementById("inputid").value);
+                    console.log("SHORTENED: " + document.getElementById("savebtn").getAttribute("data-shortened"));
+                    console.log("USER ID: " + user.uid)
+                    
+                    pushToFirebase(document.getElementById("savebtn").getAttribute("data-shortened"),user.uid, document.getElementById("inputid").value);
+     
+                    document.getElementById("accinfo").style.display = "none";}
+                  
+                  }>Save</button> </center>
+                  <center><button className="btn"  id="cancelbtn" onClick={() =>document.getElementById("accinfo").style.display = "none"}
+                  >Cancel</button></center>
               </div>
             </div>
 

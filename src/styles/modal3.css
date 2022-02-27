@@ -36,8 +36,14 @@
 
 
   #savebtn{
-      margin-top: 20%;
+      margin-top: 10%;
       border-radius: 20px;
       width: 50%;
 
   }
+  #cancelbtn{
+    margin-top: 5%;
+    border-radius: 20px;
+    width: 50%;
+
+}

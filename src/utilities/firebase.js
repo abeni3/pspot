@@ -43,6 +43,23 @@ export const useData = (path, transform) => {
     return [data, loading, error];
   };
 
+
+  export const setData = (path, value) => (
+    set(ref(database, path), value)
+  );
+
+
+  export const pushToFirebase = async (route, userid, data) => {
+    if (data) {
+      try {
+        await setData(`users/${userid}/info/${route}`, data);
+        console.log("pushed to firebase")
+      } catch (error) {
+        alert(error);
+      }
+    }
+  };
+
   export const useUserState = () => {
     const [user, setUser] = useState();
   
@@ -50,9 +67,9 @@ export const useData = (path, transform) => {
       onIdTokenChanged(getAuth(firebase), setUser);
     }, []); 
 
-    if(user){
-      console.log(user.displayName)
-    }
+    // if(user){
+    //   console.log(user.displayName)
+    // }
       
     return user;
   };

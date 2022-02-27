@@ -37,7 +37,7 @@ code {
 }
 
 
-.mainlayout{
+#mainlayout{
   margin-left: 35%;
   /* margin-left : 35% */
   width: 450px;
@@ -126,3 +126,4 @@ code {
   width: 100%;
   height: 100%;
 }
+

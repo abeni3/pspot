@@ -1,7 +1,7 @@
 .modal {
-    display: block; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: block; 
+    position: fixed; 
+    z-index: 1; 
     left: 0;
     top: 50%;
     margin-left: 35%;
@@ -9,7 +9,7 @@
     height: 50%;
     border-radius: 10px 10px 0px 0px;
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(252, 252, 252, 0.74); /* Black w/ opacity */
+    background-color: rgba(252, 252, 252, 0.74); 
 }
   
 /* Modal Content */
@@ -37,7 +37,6 @@
 }
 #eachA{
     display: flex;
-
 }
 
 #scanTo{

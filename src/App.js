@@ -13,15 +13,12 @@ import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/fire
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faUser, faQrcode, faQuestionCircle } from '@fortawesome/fontawesome-free-solid'
 
-import scanSVG from "../src/styles/svgs/scan.svg";
-import accSVG from "../src/styles/svgs/account.svg";
-import helpSVG from "../src/styles/svgs/help.svg";
 import paww from "../src/styles/svgs/paww.png";
 import close from "../src/styles/svgs/close.svg";
 import CurrentLocationIcon from "../src/styles/svgs/Location.svg";
 import paws from "../src/styles/svgs/paws.png";
 import Activepaws from "../src/styles/svgs/ActivePaws.png";
- 
+ // const ldata = require('./data/stations.json');
 import topLogo from "../src/styles/svgs/SpotLogos.png";
 import mapStyles from "./styles/mapStyles.js";
 import {
@@ -32,8 +29,7 @@ import {
   AmenityName
 } from "./styles/prev.js";
 
-
-// const ldata = require('./data/stations.json');
+import ProfilePage from "./components/profile.js";
 
 /* HELP COMMENT
 withGoogleMap initializes the map component while withScriptjs loads the Google Map JavaScript API v3.
@@ -84,7 +80,6 @@ function amenityMapped(amenities){
   ))
 }
 
-
 export default function App() { 
 
   const user = useUserState();
@@ -107,7 +102,6 @@ export default function App() {
     useEffect(() => {
       navigator.geolocation.getCurrentPosition(success);
     }, [user])
-
 
 
     return (
@@ -168,24 +162,24 @@ export default function App() {
 
         {selectedStation && (
           <div id="myModal" className="modal">   
-          <img id="clo" src={close} onClick={() => {
-                setSelectedStation(null);
-              }}/>
-          <div className="modal-content">
+            <img id="clo" src={close} onClick={() => {
+                  setSelectedStation(null);
+                }}/>
+            <div className="modal-content">
 
-            <AvailabilityTxt>{selectedStation.avaliable ? "Available": "Not Available"}</AvailabilityTxt>
-            <LocationName>{selectedStation.name}</LocationName>
-            <PriceTxt>$3.30 unlock, $0.3 per min</PriceTxt>
-            <AmenitiesLayout>
-              {selectedStation.amenities? 
-                amenityMapped(selectedStation.amenities) : ""}              
-            </AmenitiesLayout>
+              <AvailabilityTxt>{selectedStation.avaliable ? "Available": "Not Available"}</AvailabilityTxt>
+              <LocationName>{selectedStation.name}</LocationName>
+              <PriceTxt>$3.30 unlock, $0.3 per min</PriceTxt>
+              <AmenitiesLayout>
+                {selectedStation.amenities? 
+                  amenityMapped(selectedStation.amenities) : ""}              
+              </AmenitiesLayout>
 
-            <center>
-              <button id="scanTo" className="btn">Scan to unlock</button>
-            </center>
-                  
-          </div>
+              <center>
+                <button id="scanTo" className="btn">Scan to unlock</button>
+              </center>
+                    
+            </div>
                   
         </div>
         )}
@@ -198,7 +192,7 @@ export default function App() {
 
   return (
 
-    <div className="mainlayout">
+    <div id="mainlayout">
       {user ?  
         <div style={{ width: "100%", height: "100%" }}>
             <div id="topbanner">
@@ -215,13 +209,31 @@ export default function App() {
               loadingElement={<div style={{ height: `100%` ,width: '100%'}} />}
               containerElement={<div style={{ height: `75%`, width: '100%' }} />}
               mapElement={<div style={{ height: `100%`,width: '100%' }} />}
-            />
+            />  
+
+            <div id="ppage">
+              {ProfilePage({"username": user.displayName, "useremail": user.email, "userphoto": user.photoURL})}
+            </div>
+
+            <div id="accinfo">
+              <div id="accinfoC">
+                <p id="detailName">Name</p>
+                <input type="text" id="lname" name="lname" onClick={() => this.inputTitle = ""}value="Default"/>
+                <center>
+                <button id="savebtn" className="btn" onClick={() => document.getElementById("accinfo").style.display = "none"}>Save</button></center>
+              </div>
+            </div>
 
             <div id="bottomnav">
-              <FontAwesomeIcon className="botIcons" icon={faUser} />        
+              <FontAwesomeIcon className="botIcons" icon={faUser} 
+                  onClick={() => {
+                    {document.getElementById("ppage").style.display = "block"}
+                  }}
+              />
               <FontAwesomeIcon className="botIcons" icon={faQrcode} />
               <FontAwesomeIcon className="botIcons" icon={faQuestionCircle} />
             </div>
+ 
       
         </div>
     :

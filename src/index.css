@@ -12,7 +12,6 @@ code {
 }
 
 
-
 .btn {
   display: inline-block;
   background: rgb(81, 17, 165);
@@ -28,7 +27,6 @@ code {
   font-family: 'Comfortaa', cursive;
 }
 
-
 .btn:focus {
   outline: none;
  
@@ -39,21 +37,18 @@ code {
 }
 
 
-
 .mainlayout{
   margin-left: 35%;
   /* margin-left : 35% */
   width: 450px;
   height: 100vh;
   background-color: rgb(255, 255, 255);
-
-  
 }
 
 #topbanner{
   height: 9%;
   width: 100%;
-  background-image: linear-gradient(rgb(9, 7, 39), rgb(49, 25, 56));
+  background-image: linear-gradient(rgba(25, 7, 39), rgb(12, 20, 34, 0.6));
   display: flex;
 }
 
@@ -88,17 +83,17 @@ code {
 }
 
 #bottomnav{
-  display: flex;
-  /* background-color: rgb(25, 35, 49); */
   height: 16%;
-  border-radius: 7px;
-  background-image: linear-gradient(rgb(15, 14, 29), rgb(35, 34, 58));
+  background-image: linear-gradient(rgba(12, 20, 34, 0.6), rgb(25, 7, 39));
+  display: flex;
 }
 
-.botimg{
-  width: 10%;
+.botIcons{
+  color: rgb(255, 255, 255);
+  width: 8%;
   height: auto;
-  margin: 12%;
+  margin-left: 18%;
+  
 }
 
 #signin{
@@ -130,24 +125,4 @@ code {
   display: block;
   width: 100%;
   height: 100%;
-}
-#panel{
-  flex-direction: column;
-  position: fixed;
-  bottom: 0;
-  text-align: left;
-  /* margin-top: 500px; */
-  background: rgb(148, 30, 30);
-  width: 450px;
-  height: 50%;
-  /* background: #fff; */
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px 10px 0px 0px;
-  z-index: 1;
-
-}
-
-#clo{
-  background-color: red;
-  
 }

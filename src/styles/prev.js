@@ -95,29 +95,29 @@ export const PanelStyles = styled.div`
 
 export const AvailabilityTxt = styled.p`
   margin-left: 48px;
-  font-family: Karla;
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
   line-height: 1px;
   color: #5c3ef5;
   padding-top: 37px;
+  margin-bottom: 5px;
 `;
 
 export const LocationName = styled.p`
   margin-left: 48px;
-  font-family: Karla;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
   color: #1f2326;
   line-height: 1px;
+  padding-top: 10px;
   z-index: 1;
 `;
 
 export const PriceTxt = styled.p`
   margin-left: 48px;
-  font-family: Karla;
+  padding-top: 5px;
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
@@ -126,21 +126,19 @@ export const PriceTxt = styled.p`
 `;
 
 export const AmenitiesLayout = styled.div`
-  display: flex;
-  flex-direction: column;
   align-items: left;
   justify-content: left;
   margin-left: 48px;
+  padding-top: 10px;
 `;
 
 export const AmenityName = styled.p`
-  font-family: Karla;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-  line-height: 19px;
   color: #1f2326;
   z-index: 1;
+  margin-left: 10px;
 `;
 
 export const ScanButton = styled.div`

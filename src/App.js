@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   withGoogleMap,
   withScriptjs,
@@ -6,10 +7,11 @@ import {
   Marker,
   InfoWindow
 } from "react-google-maps";
+
 import { useData, useUserState, signInWithG, signOutOfG } from "./utilities/firebase.js";
 
-import $ from 'jquery';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faUser, faQrcode, faQuestionCircle } from '@fortawesome/fontawesome-free-solid'
 
 import scanSVG from "../src/styles/svgs/scan.svg";
 import accSVG from "../src/styles/svgs/account.svg";
@@ -20,31 +22,18 @@ import CurrentLocationIcon from "../src/styles/svgs/Location.svg";
 import paws from "../src/styles/svgs/paws.png";
 import Activepaws from "../src/styles/svgs/ActivePaws.png";
  
-// const ldata = require('./data/stations.json');
 import topLogo from "../src/styles/svgs/SpotLogos.png";
-
 import mapStyles from "./styles/mapStyles.js";
-
-
 import {
-  MapLayout,
-  MainLayout,
-  PanelStyles,
   LocationName,
-  AmenityName,
   AvailabilityTxt,
   PriceTxt,
-  ScanButton,
-  ScanButtonTxt,
   AmenitiesLayout,
-  BottomNav,
-  ScanBottomNavTxt,
-  ScanButtonBottomNav,
-  AccountIcon,
-  HelpIcon,
-  TopBanner,
+  AmenityName
 } from "./styles/prev.js";
-import { checkActionCode } from "firebase/auth";
+
+
+// const ldata = require('./data/stations.json');
 
 /* HELP COMMENT
 withGoogleMap initializes the map component while withScriptjs loads the Google Map JavaScript API v3.
@@ -71,8 +60,7 @@ const SignInButton = () => (
     <button id="signup" className="btn"
       onClick={() => signInWithG()}>
         New user? Sign Up with Google
-    </button>
-   
+    </button>   
   </div>
 
 );
@@ -84,58 +72,43 @@ const SignOutButton = () => (
   </button>
 );
 
-
+function amenityMapped(amenities){
+  let amList = amenities.split(",");
+  return amList.map((amenity, key) => (   
+    <div id="eachA" key={key}>
+      <FontAwesomeIcon icon={faCheck} className="ficon"/>
+      <div>
+        <AmenityName>{amenity}</AmenityName>
+      </div>
+    </div> 
+  ))
+}
 
 
 export default function App() { 
-
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-  const [status, setStatus] = useState(null);
-
 
   const user = useUserState();
   const [mdata, loading, error] =  useData("/");
   if (error) return <h1>{error}</h1>;
   if (loading) return <h1>Loading the data...</h1>;
 
-
-
-
-
-
-
-
-
   function  Map()  {
-    
-
+ 
     const [selectedStation, setSelectedStation] = useState(null);
-    // const [showResults, setShowResults] = useState(false)
-
-    const Results = (station) => (
-      <div id="panel">
-          <img id="clo" src={close} onClick={alert("hey")}/>
-  
-          <h2>{station.name}</h2>
-          <p>{station.amenities}</p>
-  
-      </div>
-    );
-
+    
     const [ currentPosition, setCurrentPosition ] = useState({});
-  
     const success = position => {
       const currentPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
+        lat: (position.coords.latitude),
+        lng: (position.coords.longitude)
       }
       setCurrentPosition(currentPosition);
-    };
-    
+    };  
     useEffect(() => {
       navigator.geolocation.getCurrentPosition(success);
-    })
+    }, [user])
+
+
 
     return (
       <GoogleMap
@@ -152,28 +125,29 @@ export default function App() {
             }}
             onClick={() => {
               setSelectedStation(station);
-              // setShowResults(true)
-              // console.log(showResults)
             }}
             icon={{
               url: paws,
               scaledSize: new window.google.maps.Size(25, 25)
             }}
-
           />
-
         ))}
 
 
-             {<Marker position={currentPosition}
-             icon={{
+        {
+          <Marker 
+            position={{
+                lat: Number(currentPosition.lat),
+                lng: Number(currentPosition.lng)
+                }}
+            icon={{
               url: CurrentLocationIcon,
               scaledSize: new window.google.maps.Size(25, 25)
-            }}/>} 
+            }}
+          />
+       } 
             
-
-  
-        {selectedStation && (
+       {selectedStation && (
           <div>
             <InfoWindow
               onCloseClick={() => {
@@ -185,18 +159,36 @@ export default function App() {
               }}
             >
               <div>
-                <h2>{selectedStation.name}</h2>
-                <p>{selectedStation.amenities}</p>
+                <h2>{selectedStation.name}</h2>  
               </div>
             </InfoWindow>
-
-            {/* <Results station={selectedStation}/> */}
+ 
           </div>
         )}
 
+        {selectedStation && (
+          <div id="myModal" className="modal">   
+          <img id="clo" src={close} onClick={() => {
+                setSelectedStation(null);
+              }}/>
+          <div className="modal-content">
 
-    
+            <AvailabilityTxt>{selectedStation.avaliable ? "Available": "Not Available"}</AvailabilityTxt>
+            <LocationName>{selectedStation.name}</LocationName>
+            <PriceTxt>$3.30 unlock, $0.3 per min</PriceTxt>
+            <AmenitiesLayout>
+              {selectedStation.amenities? 
+                amenityMapped(selectedStation.amenities) : ""}              
+            </AmenitiesLayout>
 
+            <center>
+              <button id="scanTo" className="btn">Scan to unlock</button>
+            </center>
+                  
+          </div>
+                  
+        </div>
+        )}
 
       </GoogleMap>
     );
@@ -207,39 +199,30 @@ export default function App() {
   return (
 
     <div className="mainlayout">
-      {user ? 
-     
+      {user ?  
         <div style={{ width: "100%", height: "100%" }}>
-          
             <div id="topbanner">
                 <div id="profile">
                   <img id="profilepic" src={user.photoURL}/>
-
                   <p>{user.displayName}</p>
-
                 </div>
                 <img src={paww} id="logo"/>
                 <SignOutButton/>
             </div>
 
             <MapWrapped
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8bntpT3xn96QvTL2tp0q3z0PNr0A0QL4"
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcQK-u06gf7heyS6eo0xE-hK__S5XriZs"
               loadingElement={<div style={{ height: `100%` ,width: '100%'}} />}
               containerElement={<div style={{ height: `75%`, width: '100%' }} />}
               mapElement={<div style={{ height: `100%`,width: '100%' }} />}
             />
 
             <div id="bottomnav">
-              <img class="botimg" src={accSVG} />
-              <img class="botimg" src={scanSVG} />
-              <img class="botimg" src={helpSVG} />
+              <FontAwesomeIcon className="botIcons" icon={faUser} />        
+              <FontAwesomeIcon className="botIcons" icon={faQrcode} />
+              <FontAwesomeIcon className="botIcons" icon={faQuestionCircle} />
             </div>
-
-
-            
-            
-
-          
+      
         </div>
     :
     <SignInButton />
